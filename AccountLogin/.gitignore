@@ -1,0 +1,12 @@
+.classpath
+.project
+.settings
+*.MF
+*.log
+.apt_generated
+*.orig
+.factorypath
+*.DS_Store
+.idea
+*.iml
+target/
