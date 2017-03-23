@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns="http://www.springframework.org/schema/beans"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/data/jpa
+    http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+    http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+    http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx.xsd"
+    profile="local">
+
+
+	<!-- Configure the entity manager factory bean -->
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="packagesToScan" value="com.acn.account.model" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+		</property>
+		<property name="jpaProperties">
+			<props>
+				<prop key="javax.persistence.jdbc.driver">${jdbc.driver}</prop>
+				<prop key="javax.persistence.jdbc.url">${jdbc.url}</prop>
+				<prop key="javax.persistence.jdbc.user">${db.username}</prop>
+				<prop key="javax.persistence.jdbc.password">${db.password}</prop>
+				<prop key="javax.persistence.schema-generation.database.action">drop-and-create</prop>
+				<prop key="javax.persistence.schema-generation.scripts.action">create</prop>
+				<prop key="javax.persistence.schema-generation.scripts.create-target">${db.create.schema}</prop>
+				<prop key="javax.persistence.sql-load-script-source">${db.load.script}</prop>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<prop key="hibernate.show_sql">${show.sql}</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- Configure the transaction manager bean -->
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+
+	<!-- Enable annotation driven transaction management -->
+	<tx:annotation-driven />
+
+	<!-- Configure Spring Data JPA and set the base package of the repository 
+		interfaces -->
+
+	<jpa:repositories base-package="com.acn.account.repository" />
+
+</beans>
