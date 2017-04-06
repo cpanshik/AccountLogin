@@ -8,7 +8,8 @@ import cucumber.api.java.Before;
 
 public class StepContext {
 
-	private static String APP_URI = "http://localhost:8080/";
+	private static String APP_PORT = System.getProperty("app.accountlogin.port");
+	private static String APP_URI = "http://localhost:"+ APP_PORT + "/";	
 	private static boolean initialized = false;
 	private WebDriver driver = null;
 
